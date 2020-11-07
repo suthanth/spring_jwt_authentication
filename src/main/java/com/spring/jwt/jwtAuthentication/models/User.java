@@ -1,5 +1,7 @@
 package com.spring.jwt.jwtAuthentication.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -16,6 +18,7 @@ public class User implements Serializable {
     private String email;
 
     @Column(name = "PASSWORD")
+    @JsonIgnore
     private String password;
 
     public int getId() {

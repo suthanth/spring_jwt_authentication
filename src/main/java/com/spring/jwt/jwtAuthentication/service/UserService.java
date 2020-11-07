@@ -13,4 +13,6 @@ public interface UserService {
     List<User> getAllUsers();
 
     JwtDetailsDto loginUser(User user) throws ApplicationException;
+
+    User getLoggedInUser(String token);
 }

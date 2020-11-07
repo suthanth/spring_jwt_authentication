@@ -81,4 +81,20 @@ public class UserServiceImpl implements UserService {
                 .signWith(SignatureAlgorithm.HS512, "SecretKeyToGenJWTs".getBytes())
                 .compact();
     }
+
+    @Override
+    public User getLoggedInUser(String token) {
+        if (StringUtils.isEmpty(token)) {
+            return null;
+        }
+        String email = getEmailFromToken(token);
+        return userRepository.findByEmail(email);
+    }
+
+    private String getEmailFromToken(String token) {
+        return Jwts.parser().setSigningKey("SecretKeyToGenJWTs".getBytes())
+                .parseClaimsJws(token.replace("Bearer",""))
+                .getBody()
+                .getSubject();
+    }
 }

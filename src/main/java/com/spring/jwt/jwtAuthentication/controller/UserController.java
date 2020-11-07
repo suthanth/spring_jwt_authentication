@@ -9,6 +9,7 @@ import com.spring.jwt.jwtAuthentication.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
@@ -72,5 +73,25 @@ public class UserController {
             System.out.println("Exception in sign In" + e);
         }
         return responseDto;
+    }
+
+    @GetMapping(value = "/getLoggedInUser")
+    public @ResponseBody ResponseDto<User> getLoggedInUser(HttpServletRequest request,
+                                                           HttpServletResponse response) {
+        ResponseDto<User> responseDto = new ResponseDto<>();
+        try {
+            responseDto.setData(userService.getLoggedInUser(getTokenFromHeader(request)));
+            responseDto.setStatus(CommonConstants.SUCCESS);
+        } catch (Exception e) {
+            responseDto.setErrorMessage(e.getMessage());
+            responseDto.setStatus(CommonConstants.FAILURE);
+            response.setStatus(403);
+            System.out.println("Exception in createUser" + e);
+        }
+        return responseDto;
+    }
+
+    private String getTokenFromHeader(HttpServletRequest request) {
+        return request.getHeader("Authorization");
     }
 }

@@ -26,7 +26,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private static final String[] AUTH_WHITELIST = {
             "/v2/api-docs",
-            "/v1/users/login"
+            "/v1/users/login",
+            "/v1/users/getLoggedInUser"
     };
 
     @Bean
@@ -39,6 +40,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         httpSecurity.cors().and().csrf().disable().authorizeRequests()
                 .antMatchers(AUTH_WHITELIST).permitAll()
                 .antMatchers(HttpMethod.POST, "/v1/users/createUser").permitAll()
+                .antMatchers(HttpMethod.GET, "/v1/users/getLoggedInUser").permitAll()
                 .anyRequest().authenticated()
                 .and().addFilter(new AuthenticationFilter(authenticationManager()))
                 .addFilter(new AuthorizationFilter(authenticationManager()))
