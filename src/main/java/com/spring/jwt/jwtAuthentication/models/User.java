@@ -18,7 +18,6 @@ public class User implements Serializable {
     private String email;
 
     @Column(name = "PASSWORD")
-    @JsonIgnore
     private String password;
 
     public int getId() {

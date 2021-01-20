@@ -30,11 +30,11 @@ public class UserController {
             responseDto.setStatus(CommonConstants.FAILURE);
             responseDto.setErrorCode(ae.getErrorCode());
             responseDto.setErrorMessage(ae.getErrorMessage());
-            System.out.println("Exception in createUser" + ae.getMessage());
+            System.out.println("Exception in createUser" + ae);
         } catch (Exception e) {
             responseDto.setErrorMessage(e.getMessage());
             responseDto.setStatus(CommonConstants.FAILURE);
-            System.out.println("Exception in createUser" + e);
+            System.out.println("Exception in createUser w" + e);
         }
         return responseDto;
     }
